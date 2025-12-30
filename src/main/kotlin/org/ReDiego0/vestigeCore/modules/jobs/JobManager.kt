@@ -11,13 +11,13 @@ import org.bukkit.potion.PotionEffectType
 
 class JobManager(private val plugin: VestigeCore) {
     private val keyArchitectReach = NamespacedKey(plugin, "architect_reach")
-    private val keyArchitectStep = NamespacedKey(plugin, "architect_step")
+    private val keyArchitectJump = NamespacedKey(plugin, "architect_jump")
 
     fun refreshJobBuffs(player: Player) {
         val job = JobType.getJob(player)
 
         player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE)?.removeModifier(keyArchitectReach)
-        player.getAttribute(Attribute.GENERIC_STEP_HEIGHT)?.removeModifier(keyArchitectStep)
+        player.getAttribute(Attribute.GENERIC_JUMP_STRENGTH)?.removeModifier(keyArchitectJump)
 
         player.removePotionEffect(PotionEffectType.HASTE)
         player.removePotionEffect(PotionEffectType.CONDUIT_POWER)
@@ -33,14 +33,14 @@ class JobManager(private val plugin: VestigeCore) {
                 )
                 player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE)?.addModifier(reachMod)
 
-                // Paso +0.5
-                val stepMod = AttributeModifier(
-                    keyArchitectStep,
-                    0.5,
+                val jumpMod = AttributeModifier(
+                    keyArchitectJump,
+                    0.25,
                     AttributeModifier.Operation.ADD_NUMBER,
                     EquipmentSlotGroup.FEET
                 )
-                player.getAttribute(Attribute.GENERIC_STEP_HEIGHT)?.addModifier(stepMod)
+                player.getAttribute(Attribute.GENERIC_JUMP_STRENGTH)?.addModifier(jumpMod)
+
             }
             JobType.PROSPECTOR -> {
                 player.addPotionEffect(PotionEffect(PotionEffectType.HASTE, PotionEffect.INFINITE_DURATION, 1, false, false, false))
