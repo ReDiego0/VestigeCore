@@ -1,0 +1,21 @@
+# ==========================================
+#        VESTIGECORE - CONFIGURACIÓN
+# ==========================================
+
+economy:
+  currency:
+    name-singular: "Crédito"
+    name-plural: "Créditos"
+    symbol: "$"
+    # Formato de visualización. %amount% es el número, %symbol% es el símbolo/nombre
+    format: "%symbol%%amount%"
+  settings:
+    starting-balance: 0
+    # Guardar datos cada X segundos (Default: 300s = 5 min)
+    save-interval: 300
+  messages:
+    # Soporta códigos de color con & (ej: &a, &c)
+    insufficient-funds: "&cFondos insuficientes en tu cuenta."
+    deposit-success: "&aSe han depositado %amount% en tu cuenta."
+    withdraw-success: "&eSe han retirado %amount% de tu cuenta."
+    error-negative: "&cNo se pueden procesar montos negativos."

@@ -1,0 +1,12 @@
+name: VestigeCore
+version: '1.0.0'
+main: org.ReDiego0.vestigeCore.VestigeCore
+api-version: '1.21'
+depend:
+  - Vault
+commands:
+  vcore:
+    description: Comando administrativo principal de Vestige
+    usage: /vcore <modulo> <args>
+    permission: vestige.admin.base
+    aliases: [vestige]
