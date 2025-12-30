@@ -5,6 +5,9 @@ import org.ReDiego0.vestigeCore.modules.economy.EconomyManager
 import org.ReDiego0.vestigeCore.modules.economy.VestigeEconomy
 import org.ReDiego0.vestigeCore.commands.VestigeCommandManager
 import org.ReDiego0.vestigeCore.modules.economy.commands.EconomySubCommand
+import org.ReDiego0.vestigeCore.modules.jobs.JobManager
+import org.ReDiego0.vestigeCore.modules.jobs.JobListener
+import org.ReDiego0.vestigeCore.modules.jobs.commands.JobSubCommand
 import org.bukkit.Bukkit
 import org.bukkit.plugin.ServicePriority
 import org.bukkit.plugin.java.JavaPlugin
@@ -13,13 +16,18 @@ class VestigeCore : JavaPlugin() {
 
     private lateinit var economyManager: EconomyManager
     private lateinit var commandManager: VestigeCommandManager
+    private lateinit var jobManager: JobManager
 
     override fun onEnable() {
         saveDefaultConfig()
         economyManager = EconomyManager(this)
         commandManager = VestigeCommandManager(this)
+        jobManager = JobManager(this)
+
+        server.pluginManager.registerEvents(JobListener(this, jobManager), this)
 
         commandManager.register(EconomySubCommand(economyManager))
+        commandManager.register(JobSubCommand(jobManager))
 
         val cmd = getCommand("vcore")
         if (cmd != null) {
