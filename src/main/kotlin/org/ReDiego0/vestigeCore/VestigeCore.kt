@@ -14,8 +14,8 @@ import org.ReDiego0.vestigeCore.modules.aqua.TownyAquaManager
 import org.ReDiego0.vestigeCore.modules.aqua.commands.AquaSubCommand
 import org.ReDiego0.vestigeCore.modules.aqua.commands.TownyBankCommand
 import org.ReDiego0.vestigeCore.modules.aqua.data.AquaDatabase
-
-
+import org.ReDiego0.vestigeCore.modules.economy.commands.BalanceCommand
+import org.ReDiego0.vestigeCore.modules.economy.commands.PayCommand
 
 import org.bukkit.Bukkit
 import org.bukkit.plugin.ServicePriority
@@ -26,6 +26,7 @@ class VestigeCore : JavaPlugin() {
     private lateinit var economyManager: EconomyManager
     private lateinit var commandManager: VestigeCommandManager
     private lateinit var jobManager: JobManager
+
     private lateinit var aquaManager: AquaManager
     private lateinit var aquaTaxManager: AquaTaxManager
     private lateinit var townyAquaManager: TownyAquaManager
@@ -33,33 +34,7 @@ class VestigeCore : JavaPlugin() {
 
     override fun onEnable() {
         saveDefaultConfig()
-        aquaDatabase = AquaDatabase(this)
-
         economyManager = EconomyManager(this)
-        commandManager = VestigeCommandManager(this)
-        jobManager = JobManager(this)
-        aquaManager = AquaManager(this)
-        aquaTaxManager = AquaTaxManager(this, aquaDatabase)
-        townyAquaManager = TownyAquaManager(this, aquaManager, aquaDatabase)
-
-        server.pluginManager.registerEvents(JobListener(this, jobManager), this)
-
-        commandManager.register(EconomySubCommand(economyManager))
-        commandManager.register(JobSubCommand(jobManager))
-        commandManager.register(AquaSubCommand(aquaManager))
-        commandManager.register(TownyBankCommand(townyAquaManager))
-
-        aquaTaxManager.startScheduler()
-        val cmd = getCommand("vcore")
-        if (cmd != null) {
-            cmd.setExecutor(commandManager)
-            cmd.setTabCompleter(commandManager)
-            logger.info("Comando /vcore registrado correctamente.")
-        } else {
-            logger.severe("ERROR FATAL: No se encontró 'vcore' en plugin.yml. Desactivando plugin.")
-            server.pluginManager.disablePlugin(this)
-            return
-        }
 
         if (server.pluginManager.getPlugin("Vault") != null) {
             val provider = VestigeEconomy(this, economyManager)
@@ -74,10 +49,52 @@ class VestigeCore : JavaPlugin() {
             logger.warning("Vault no encontrado. La economía funcionará internamente pero no con otros plugins.")
         }
 
+        commandManager = VestigeCommandManager(this)
+        jobManager = JobManager(this)
+        server.pluginManager.registerEvents(JobListener(this, jobManager), this)
+
+        val cmd = getCommand("vcore")
+        if (cmd != null) {
+            cmd.setExecutor(commandManager)
+            cmd.setTabCompleter(commandManager)
+            logger.info("Comando /vcore registrado correctamente.")
+        } else {
+            logger.severe("ERROR FATAL: No se encontró 'vcore' en plugin.yml. Desactivando plugin.")
+            server.pluginManager.disablePlugin(this)
+            return
+        }
+
+        commandManager.register(EconomySubCommand(economyManager))
+        commandManager.register(PayCommand(economyManager))
+        commandManager.register(BalanceCommand(economyManager))
+        commandManager.register(JobSubCommand(jobManager))
+
+        Bukkit.getScheduler().runTask(this, Runnable {
+            if (server.pluginManager.isPluginEnabled("Towny")) {
+                logger.info("Towny detectado y habilitado. Iniciando módulos de Aqua...")
+                initAquaModules()
+            } else {
+                logger.warning("Towny no está habilitado o no se encontró. El módulo Aqua (Bancos/Impuestos) NO se cargará.")
+            }
+        })
+
         val saveInterval = config.getLong("economy.settings.save-interval", 300) * 20L
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
             economyManager.saveAccounts()
         }, saveInterval, saveInterval)
+    }
+
+    private fun initAquaModules() {
+        aquaDatabase = AquaDatabase(this)
+        aquaManager = AquaManager(this)
+        townyAquaManager = TownyAquaManager(this, aquaManager, aquaDatabase)
+        aquaTaxManager = AquaTaxManager(this, aquaDatabase)
+
+        commandManager.register(AquaSubCommand(aquaManager))
+        commandManager.register(TownyBankCommand(townyAquaManager))
+        aquaTaxManager.startScheduler()
+
+        logger.info("Módulo Aqua: Listo (Sistema, Banco y Cobros).")
     }
 
     override fun onDisable() {

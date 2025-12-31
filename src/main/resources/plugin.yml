@@ -5,7 +5,8 @@ api-version: '1.21'
 depend:
   - Vault
   - SimpleItemGenerator
-  - Towny
+softdepend: [Towny]
+loadbefore: [Towny]
 commands:
   vcore:
     description: Comando administrativo principal de Vestige

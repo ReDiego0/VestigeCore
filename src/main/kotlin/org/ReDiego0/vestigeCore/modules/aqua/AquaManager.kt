@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack
 import ua.valeriishymchuk.simpleitemgenerator.api.SimpleItemGenerator
 
 class AquaManager(private val plugin: VestigeCore) {
-    private val SIG_ITEM_ID = "aqua"
+    private val SIG_ITEM_ID = "economy:aqua"
     fun getAquaItem(amount: Int): ItemStack? {
         if (!SimpleItemGenerator.get().hasKey(SIG_ITEM_ID)) {
             plugin.logger.warning("¡Alerta! No se encuentra el item '$SIG_ITEM_ID' en la config de SimpleItemGenerator.")
