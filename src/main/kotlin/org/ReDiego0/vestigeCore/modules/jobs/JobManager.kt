@@ -16,8 +16,8 @@ class JobManager(private val plugin: VestigeCore) {
     fun refreshJobBuffs(player: Player) {
         val job = JobType.getJob(player)
 
-        player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE)?.removeModifier(keyArchitectReach)
-        player.getAttribute(Attribute.GENERIC_JUMP_STRENGTH)?.removeModifier(keyArchitectJump)
+        player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE)?.removeModifier(keyArchitectReach)
+        player.getAttribute(Attribute.JUMP_STRENGTH)?.removeModifier(keyArchitectJump)
 
         player.removePotionEffect(PotionEffectType.HASTE)
         player.removePotionEffect(PotionEffectType.CONDUIT_POWER)
@@ -31,7 +31,7 @@ class JobManager(private val plugin: VestigeCore) {
                     AttributeModifier.Operation.ADD_NUMBER,
                     EquipmentSlotGroup.HAND
                 )
-                player.getAttribute(Attribute.PLAYER_BLOCK_INTERACTION_RANGE)?.addModifier(reachMod)
+                player.getAttribute(Attribute.BLOCK_INTERACTION_RANGE)?.addModifier(reachMod)
 
                 val jumpMod = AttributeModifier(
                     keyArchitectJump,
@@ -39,7 +39,7 @@ class JobManager(private val plugin: VestigeCore) {
                     AttributeModifier.Operation.ADD_NUMBER,
                     EquipmentSlotGroup.FEET
                 )
-                player.getAttribute(Attribute.GENERIC_JUMP_STRENGTH)?.addModifier(jumpMod)
+                player.getAttribute(Attribute.JUMP_STRENGTH)?.addModifier(jumpMod)
 
             }
             JobType.PROSPECTOR -> {

@@ -220,21 +220,21 @@ class JobListener(
         }
 
         when (bonus) {
-            SmithingBonus.SHARP -> meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, AttributeModifier(keyBonus, 1.0, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
-            SmithingBonus.HARD -> meta.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, AttributeModifier(keyBonus, 1.0, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
+            SmithingBonus.SHARP -> meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, AttributeModifier(keyBonus, 1.0, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
+            SmithingBonus.HARD -> meta.addAttributeModifier(Attribute.ARMOR_TOUGHNESS, AttributeModifier(keyBonus, 1.0, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
             SmithingBonus.DURABLE -> {
                 val current = meta.getEnchantLevel(org.bukkit.enchantments.Enchantment.UNBREAKING)
                 meta.addEnchant(org.bukkit.enchantments.Enchantment.UNBREAKING, current + 1, true)
             }
-            SmithingBonus.VITALITY -> meta.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, AttributeModifier(keyBonus, 2.0, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
-            SmithingBonus.SWIFT -> meta.addAttributeModifier(Attribute.GENERIC_MOVEMENT_SPEED, AttributeModifier(keyBonus, 0.05, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
-            SmithingBonus.IMPACT -> meta.addAttributeModifier(Attribute.GENERIC_ATTACK_KNOCKBACK, AttributeModifier(keyBonus, 0.5, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
-            SmithingBonus.BALANCED -> meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, AttributeModifier(keyBonus, 0.10, AttributeModifier.Operation.ADD_SCALAR, slotGroup))
-            SmithingBonus.LUCKY -> meta.addAttributeModifier(Attribute.GENERIC_LUCK, AttributeModifier(keyBonus, 1.0, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
+            SmithingBonus.VITALITY -> meta.addAttributeModifier(Attribute.MAX_HEALTH, AttributeModifier(keyBonus, 2.0, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
+            SmithingBonus.SWIFT -> meta.addAttributeModifier(Attribute.MOVEMENT_SPEED, AttributeModifier(keyBonus, 0.05, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
+            SmithingBonus.IMPACT -> meta.addAttributeModifier(Attribute.ATTACK_KNOCKBACK, AttributeModifier(keyBonus, 0.5, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
+            SmithingBonus.BALANCED -> meta.addAttributeModifier(Attribute.ATTACK_SPEED, AttributeModifier(keyBonus, 0.10, AttributeModifier.Operation.ADD_SCALAR, slotGroup))
+            SmithingBonus.LUCKY -> meta.addAttributeModifier(Attribute.LUCK, AttributeModifier(keyBonus, 1.0, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
             SmithingBonus.LEGENDARY -> {
-                meta.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, AttributeModifier(keyBonus, 0.1, AttributeModifier.Operation.ADD_SCALAR, slotGroup))
-                meta.addAttributeModifier(Attribute.GENERIC_ATTACK_SPEED, AttributeModifier(keyBonus, 0.1, AttributeModifier.Operation.ADD_SCALAR, slotGroup))
-                meta.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, AttributeModifier(keyBonus, 2.0, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
+                meta.addAttributeModifier(Attribute.ATTACK_DAMAGE, AttributeModifier(keyBonus, 0.1, AttributeModifier.Operation.ADD_SCALAR, slotGroup))
+                meta.addAttributeModifier(Attribute.ATTACK_SPEED, AttributeModifier(keyBonus, 0.1, AttributeModifier.Operation.ADD_SCALAR, slotGroup))
+                meta.addAttributeModifier(Attribute.MAX_HEALTH, AttributeModifier(keyBonus, 2.0, AttributeModifier.Operation.ADD_NUMBER, slotGroup))
                 meta.setEnchantmentGlintOverride(true)
             }
         }
