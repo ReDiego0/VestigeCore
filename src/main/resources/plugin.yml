@@ -4,6 +4,8 @@ main: org.ReDiego0.vestigeCore.VestigeCore
 api-version: '1.21'
 depend:
   - Vault
+  - SimpleItemGenerator
+  - Towny
 commands:
   vcore:
     description: Comando administrativo principal de Vestige
