@@ -19,7 +19,9 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.4-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+    compileOnly("com.github.MilkBowl:VaultAPI:1.7"){
+        exclude(group = "org.bukkit", module = "bukkit")
+    }
     compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.2")
     compileOnly("net.kyori:adventure-api:4.17.0")
     compileOnly("io.github.valerashimchuck:simpleitemgenerator-api:1.10.0")

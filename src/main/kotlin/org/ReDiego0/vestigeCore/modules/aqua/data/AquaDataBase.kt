@@ -17,7 +17,12 @@ class AquaDatabase(private val plugin: VestigeCore) {
     private fun load() {
         if (!file.exists()) {
             file.parentFile.mkdirs()
-            plugin.saveResource("town_balances.yml", false)
+            try {
+                file.createNewFile()
+            } catch (e: Exception) {
+                plugin.logger.severe("No se pudo crear town_balances.yml!")
+                e.printStackTrace()
+            }
         }
         config = YamlConfiguration.loadConfiguration(file)
     }

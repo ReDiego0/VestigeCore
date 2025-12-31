@@ -50,8 +50,6 @@ class VestigeCore : JavaPlugin() {
         commandManager.register(TownyBankCommand(townyAquaManager))
 
         aquaTaxManager.startScheduler()
-        logger.info("Módulo Aqua: Listo (Sistema, Banco y Cobros).")
-
         val cmd = getCommand("vcore")
         if (cmd != null) {
             cmd.setExecutor(commandManager)
