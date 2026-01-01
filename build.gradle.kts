@@ -14,6 +14,7 @@ repositories {
     }
     maven("https://jitpack.io")
     maven("https://repo.glaremasters.me/repository/towny/")
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
 }
 
 dependencies {
@@ -25,6 +26,7 @@ dependencies {
     compileOnly("com.palmergames.bukkit.towny:towny:0.102.0.2")
     compileOnly("net.kyori:adventure-api:4.17.0")
     compileOnly("io.github.valerashimchuck:simpleitemgenerator-api:1.10.0")
+    compileOnly("me.clip:placeholderapi:2.11.6")
 }
 
 tasks {
